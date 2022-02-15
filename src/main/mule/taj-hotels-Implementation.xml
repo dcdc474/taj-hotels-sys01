@@ -1,5 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd"></mule>
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="Get-Hotels" doc:id="8c0e34c9-f540-4ccc-b00d-c7300b0b5e28" >
+		<logger level="INFO" doc:name="Logger" doc:id="b2264623-5f2e-41c1-9de7-046ad3af5740" message="Reteriving Hotels Begin..."/>
+		<db:select doc:id="3ad52537-135b-49d7-ac6c-0612af3d579d" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from TajHotels where (city=:city OR ""=:city) 
+]]></db:sql>
+			<db:input-parameters ><![CDATA[#['city':payload.body.GET_Hotels_GET_InputMessage.city default ""]]]></db:input-parameters>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="61feeb3b-b60e-48f1-b23b-e127cfb6369a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+
+ns ns0 https://www.example.com/schemas
+---
+{
+	body: {
+		ns0#GET_Hotels_GET_OutputMessage: {
+			response200: payload[0]
+		}
+	} write "application/xml"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="759b0fcd-3130-430e-9ec6-c1308f0f83ee" message="Reteriving Hotels End..."/>
+	</flow>
+	<flow name="Post-Hotels" doc:id="cd7989a8-2624-431a-af86-8665a9e50613" >
+		<ee:transform doc:name="Transform Message" doc:id="7b253f2e-5139-4589-bee4-396335c3c2c4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+ns ns0 https://www.example.com/schemas
+---
+{
+    body: {
+        ns0#findHotelResponse: {
+           message : "Hotel Booked Successfully. Travel Stay"
+        }
+    } write "application/xml"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
