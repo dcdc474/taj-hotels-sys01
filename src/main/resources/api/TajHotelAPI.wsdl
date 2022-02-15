@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:schemas="https://www.example.com/schemas" xmlns:wsdl="https://www.example.com/wsdl" targetNamespace="https://www.example.com/wsdl" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema xmlns:tns="https://www.example.com/schemas" targetNamespace="https://www.example.com/schemas" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="GET_Hotels_GET_InputMessage" type="schemas:GET_Hotels_GET_InputMessage" />
+      <xs:element name="GET_Hotels_GET_OutputMessage" type="schemas:GET_Hotels_GET_OutputMessage" />
+      <xs:element name="GET_Hotels_GET_401" type="schemas:GET_Hotels_GET_401" />
+      <xs:element name="GET_Hotels_GET_429" type="schemas:GET_Hotels_GET_429" />
+      <xs:element name="GET_Hotels_GET_500" type="schemas:GET_Hotels_GET_500" />
+      <xs:element name="GET_Hotels_GET_503" type="schemas:GET_Hotels_GET_503" />
+      <xs:element name="POST_Hotels_POST_InputMessage" type="schemas:POST_Hotels_POST_InputMessage" />
+      <xs:element name="POST_Hotels_POST_OutputMessage" type="schemas:POST_Hotels_POST_OutputMessage" />
+      <xs:element name="POST_Hotels_POST_401" type="schemas:POST_Hotels_POST_401" />
+      <xs:element name="POST_Hotels_POST_429" type="schemas:POST_Hotels_POST_429" />
+      <xs:element name="POST_Hotels_POST_500" type="schemas:POST_Hotels_POST_500" />
+      <xs:element name="POST_Hotels_POST_503" type="schemas:POST_Hotels_POST_503" />
+      <xs:complexType name="HotelDataType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ID" type="xs:integer" />
+          <xs:element minOccurs="1" name="HotelName" type="xs:string" />
+          <xs:element minOccurs="1" name="City" type="xs:string" />
+          <xs:element minOccurs="1" name="Price" type="xs:double" />
+          <xs:element minOccurs="1" name="Star" type="xs:integer" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="BookHotel">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="Name" type="xs:string" />
+          <xs:element minOccurs="1" name="City" type="xs:string" />
+          <xs:element minOccurs="1" name="CheckIn" type="xs:string" />
+          <xs:element minOccurs="1" name="CheckOut" type="xs:string" />
+          <xs:element minOccurs="1" name="NoOfRooms" type="xs:integer" />
+          <xs:element minOccurs="1" name="NoOfPerson" type="xs:integer" />
+          <xs:element minOccurs="1" name="HotelName" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Hotelsresponse">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GET_Hotels_GET_InputMessage">
+        <xs:sequence>
+        	<xs:element minOccurs="0" name="city" type="xs:string" maxOccurs="1"/>
+        	<xs:element name="checkInDate" type="xs:string" maxOccurs="1" minOccurs="0"></xs:element>
+        	<xs:element name="checkOutDate" type="xs:string" maxOccurs="1" minOccurs="0"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GET_Hotels_GET_OutputMessage">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="unbounded" name="response200" type="schemas:HotelDataType" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GET_Hotels_GET_401">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="response401">
+            <xs:annotation>
+              <xs:documentation>Unauthorized, The client_id or client_secret are not valid or the client does not have access.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GET_Hotels_GET_429">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="response429">
+            <xs:annotation>
+              <xs:documentation>The client used all of its request quota for the current period.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GET_Hotels_GET_500">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="response500">
+            <xs:annotation>
+              <xs:documentation>An error occurred, see the specific message (Only if it is a WSDL endpoint).</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GET_Hotels_GET_503">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="response503">
+            <xs:annotation>
+              <xs:documentation>Contracts Information Unreachable.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="POST_Hotels_POST_InputMessage">
+        <xs:sequence>
+          <xs:element minOccurs="1" fixed="application/json" name="Content-Type" type="xs:string" />
+          <xs:element minOccurs="1" name="body" type="schemas:BookHotel" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="POST_Hotels_POST_OutputMessage">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="response201" type="schemas:Hotelsresponse" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="POST_Hotels_POST_401">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="response401">
+            <xs:annotation>
+              <xs:documentation>Unauthorized, The client_id or client_secret are not valid or the client does not have access.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="POST_Hotels_POST_429">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="response429">
+            <xs:annotation>
+              <xs:documentation>The client used all of its request quota for the current period.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="POST_Hotels_POST_500">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="response500">
+            <xs:annotation>
+              <xs:documentation>An error occurred, see the specific message (Only if it is a WSDL endpoint).</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="POST_Hotels_POST_503">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="response503">
+            <xs:annotation>
+              <xs:documentation>Contracts Information Unreachable.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="GET_Hotels_GET_InputMessage">
+    <part name="GET_Hotels_GET_InputMessage" element="schemas:GET_Hotels_GET_InputMessage" />
+  </message>
+  <message name="GET_Hotels_GET_OutputMessage">
+    <part name="GET_Hotels_GET_OutputMessage" element="schemas:GET_Hotels_GET_OutputMessage" />
+  </message>
+  <message name="GET_Hotels_GET_401">
+    <part name="GET_Hotels_GET_401" element="schemas:GET_Hotels_GET_401" />
+  </message>
+  <message name="GET_Hotels_GET_429">
+    <part name="GET_Hotels_GET_429" element="schemas:GET_Hotels_GET_429" />
+  </message>
+  <message name="GET_Hotels_GET_500">
+    <part name="GET_Hotels_GET_500" element="schemas:GET_Hotels_GET_500" />
+  </message>
+  <message name="GET_Hotels_GET_503">
+    <part name="GET_Hotels_GET_503" element="schemas:GET_Hotels_GET_503" />
+  </message>
+  <message name="POST_Hotels_POST_InputMessage">
+    <part name="POST_Hotels_POST_InputMessage" element="schemas:POST_Hotels_POST_InputMessage" />
+  </message>
+  <message name="POST_Hotels_POST_OutputMessage">
+    <part name="POST_Hotels_POST_OutputMessage" element="schemas:POST_Hotels_POST_OutputMessage" />
+  </message>
+  <message name="POST_Hotels_POST_401">
+    <part name="POST_Hotels_POST_401" element="schemas:POST_Hotels_POST_401" />
+  </message>
+  <message name="POST_Hotels_POST_429">
+    <part name="POST_Hotels_POST_429" element="schemas:POST_Hotels_POST_429" />
+  </message>
+  <message name="POST_Hotels_POST_500">
+    <part name="POST_Hotels_POST_500" element="schemas:POST_Hotels_POST_500" />
+  </message>
+  <message name="POST_Hotels_POST_503">
+    <part name="POST_Hotels_POST_503" element="schemas:POST_Hotels_POST_503" />
+  </message>
+  <portType name="Hotel_x0020_Booking_x0020_API_x0020_Spec_PortType">
+    <operation name="GET_Hotels_GET">
+      <documentation />
+      <input message="wsdl:GET_Hotels_GET_InputMessage" />
+      <output message="wsdl:GET_Hotels_GET_OutputMessage">
+        <documentation />
+      </output>
+      <fault name="GET_Hotels_GET_401" message="wsdl:GET_Hotels_GET_401">
+        <documentation>Unauthorized, The client_id or client_secret are not valid or the client does not have access.</documentation>
+      </fault>
+      <fault name="GET_Hotels_GET_429" message="wsdl:GET_Hotels_GET_429">
+        <documentation>The client used all of its request quota for the current period.</documentation>
+      </fault>
+      <fault name="GET_Hotels_GET_500" message="wsdl:GET_Hotels_GET_500">
+        <documentation>An error occurred, see the specific message (Only if it is a WSDL endpoint).</documentation>
+      </fault>
+      <fault name="GET_Hotels_GET_503" message="wsdl:GET_Hotels_GET_503">
+        <documentation>Contracts Information Unreachable.</documentation>
+      </fault>
+    </operation>
+    <operation name="POST_Hotels_POST">
+      <documentation />
+      <input message="wsdl:POST_Hotels_POST_InputMessage" />
+      <output message="wsdl:POST_Hotels_POST_OutputMessage">
+        <documentation />
+      </output>
+      <fault name="POST_Hotels_POST_401" message="wsdl:POST_Hotels_POST_401">
+        <documentation>Unauthorized, The client_id or client_secret are not valid or the client does not have access.</documentation>
+      </fault>
+      <fault name="POST_Hotels_POST_429" message="wsdl:POST_Hotels_POST_429">
+        <documentation>The client used all of its request quota for the current period.</documentation>
+      </fault>
+      <fault name="POST_Hotels_POST_500" message="wsdl:POST_Hotels_POST_500">
+        <documentation>An error occurred, see the specific message (Only if it is a WSDL endpoint).</documentation>
+      </fault>
+      <fault name="POST_Hotels_POST_503" message="wsdl:POST_Hotels_POST_503">
+        <documentation>Contracts Information Unreachable.</documentation>
+      </fault>
+    </operation>
+  </portType>
+  <binding name="Hotel_x0020_Booking_x0020_API_x0020_Spec_Binding" type="wsdl:Hotel_x0020_Booking_x0020_API_x0020_Spec_PortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+    <operation name="GET_Hotels_GET">
+      <soap:operation soapAction="GET_Hotels_GET" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="GET_Hotels_GET_401">
+        <soap:fault use="literal" name="GET_Hotels_GET_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_Hotels_GET_429">
+        <soap:fault use="literal" name="GET_Hotels_GET_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_Hotels_GET_500">
+        <soap:fault use="literal" name="GET_Hotels_GET_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="GET_Hotels_GET_503">
+        <soap:fault use="literal" name="GET_Hotels_GET_503" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+    <operation name="POST_Hotels_POST">
+      <soap:operation soapAction="POST_Hotels_POST" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+      <fault name="POST_Hotels_POST_401">
+        <soap:fault use="literal" name="POST_Hotels_POST_401" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Hotels_POST_429">
+        <soap:fault use="literal" name="POST_Hotels_POST_429" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Hotels_POST_500">
+        <soap:fault use="literal" name="POST_Hotels_POST_500" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+      <fault name="POST_Hotels_POST_503">
+        <soap:fault use="literal" name="POST_Hotels_POST_503" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </fault>
+    </operation>
+  </binding>
+  <service name="Hotel_x0020_Booking_x0020_API_x0020_Spec">
+    <documentation />
+    <port name="default_Port" binding="wsdl:Hotel_x0020_Booking_x0020_API_x0020_Spec_Binding">
+      <soap:address location="https://www.tajgroup.com" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" />
+    </port>
+  </service>
+</definitions>
