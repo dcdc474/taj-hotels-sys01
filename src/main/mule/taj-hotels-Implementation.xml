@@ -22,7 +22,7 @@ ns ns0 https://www.example.com/schemas
 {
 	body: {
 		ns0#GET_Hotels_GET_OutputMessage: {
-			response200: payload[0]
+			response200: payload
 		}
 	} write "application/xml"
 }]]></ee:set-payload>
